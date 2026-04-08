@@ -118,7 +118,6 @@ namespace Google.GenAI {
         if (disposing)
         {
             _apiClient.Dispose();
-            _interactionsClient.Dispose();
         }
     }
 
