@@ -539,6 +539,11 @@ namespace Google.GenAI {
         throw new NotSupportedException("dest parameter is not supported in Gemini API.");
       }
 
+      if (Common.GetValueByPath(fromObject, new string[] { "webhookConfig" }) != null) {
+        Common.SetValueByPath(parentObject, new string[] { "batch", "webhookConfig" },
+                              Common.GetValueByPath(fromObject, new string[] { "webhookConfig" }));
+      }
+
       return toObject;
     }
 
@@ -556,6 +561,10 @@ namespace Google.GenAI {
                                   Common.ParseToJsonNode(Transformers.TBatchJobDestination(
                                       Common.GetValueByPath(fromObject, new string[] { "dest" }))),
                                   toObject));
+      }
+
+      if (!Common.IsZero(Common.GetValueByPath(fromObject, new string[] { "webhookConfig" }))) {
+        throw new NotSupportedException("webhookConfig parameter is not supported in Vertex AI.");
       }
 
       return toObject;

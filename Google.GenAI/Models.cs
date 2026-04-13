@@ -2101,6 +2101,11 @@ namespace Google.GenAI {
         throw new NotSupportedException("labels parameter is not supported in Gemini API.");
       }
 
+      if (Common.GetValueByPath(fromObject, new string[] { "webhookConfig" }) != null) {
+        Common.SetValueByPath(parentObject, new string[] { "webhookConfig" },
+                              Common.GetValueByPath(fromObject, new string[] { "webhookConfig" }));
+      }
+
       return toObject;
     }
 
@@ -2207,6 +2212,10 @@ namespace Google.GenAI {
       if (Common.GetValueByPath(fromObject, new string[] { "labels" }) != null) {
         Common.SetValueByPath(parentObject, new string[] { "labels" },
                               Common.GetValueByPath(fromObject, new string[] { "labels" }));
+      }
+
+      if (!Common.IsZero(Common.GetValueByPath(fromObject, new string[] { "webhookConfig" }))) {
+        throw new NotSupportedException("webhookConfig parameter is not supported in Vertex AI.");
       }
 
       return toObject;
