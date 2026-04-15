@@ -532,28 +532,6 @@ namespace Google.GenAI {
       return toObject;
     }
 
-    internal JsonNode ListTuningJobsConfigToMldev(JsonNode fromObject, JsonObject parentObject,
-                                                  JsonNode rootObject) {
-      JsonObject toObject = new JsonObject();
-
-      if (Common.GetValueByPath(fromObject, new string[] { "pageSize" }) != null) {
-        Common.SetValueByPath(parentObject, new string[] { "_query", "pageSize" },
-                              Common.GetValueByPath(fromObject, new string[] { "pageSize" }));
-      }
-
-      if (Common.GetValueByPath(fromObject, new string[] { "pageToken" }) != null) {
-        Common.SetValueByPath(parentObject, new string[] { "_query", "pageToken" },
-                              Common.GetValueByPath(fromObject, new string[] { "pageToken" }));
-      }
-
-      if (Common.GetValueByPath(fromObject, new string[] { "filter" }) != null) {
-        Common.SetValueByPath(parentObject, new string[] { "_query", "filter" },
-                              Common.GetValueByPath(fromObject, new string[] { "filter" }));
-      }
-
-      return toObject;
-    }
-
     internal JsonNode ListTuningJobsConfigToVertex(JsonNode fromObject, JsonObject parentObject,
                                                    JsonNode rootObject) {
       JsonObject toObject = new JsonObject();
@@ -576,19 +554,6 @@ namespace Google.GenAI {
       return toObject;
     }
 
-    internal JsonNode ListTuningJobsParametersToMldev(JsonNode fromObject, JsonObject parentObject,
-                                                      JsonNode rootObject) {
-      JsonObject toObject = new JsonObject();
-
-      if (Common.GetValueByPath(fromObject, new string[] { "config" }) != null) {
-        _ = ListTuningJobsConfigToMldev(
-            Common.ParseToJsonNode(Common.GetValueByPath(fromObject, new string[] { "config" })),
-            toObject, rootObject);
-      }
-
-      return toObject;
-    }
-
     internal JsonNode ListTuningJobsParametersToVertex(JsonNode fromObject, JsonObject parentObject,
                                                        JsonNode rootObject) {
       JsonObject toObject = new JsonObject();
@@ -597,35 +562,6 @@ namespace Google.GenAI {
         _ = ListTuningJobsConfigToVertex(
             Common.ParseToJsonNode(Common.GetValueByPath(fromObject, new string[] { "config" })),
             toObject, rootObject);
-      }
-
-      return toObject;
-    }
-
-    internal JsonNode ListTuningJobsResponseFromMldev(JsonNode fromObject, JsonObject parentObject,
-                                                      JsonNode rootObject) {
-      JsonObject toObject = new JsonObject();
-
-      if (Common.GetValueByPath(fromObject, new string[] { "sdkHttpResponse" }) != null) {
-        Common.SetValueByPath(
-            toObject, new string[] { "sdkHttpResponse" },
-            Common.GetValueByPath(fromObject, new string[] { "sdkHttpResponse" }));
-      }
-
-      if (Common.GetValueByPath(fromObject, new string[] { "nextPageToken" }) != null) {
-        Common.SetValueByPath(toObject, new string[] { "nextPageToken" },
-                              Common.GetValueByPath(fromObject, new string[] { "nextPageToken" }));
-      }
-
-      if (Common.GetValueByPath(fromObject, new string[] { "tunedModels" }) != null) {
-        JsonArray keyArray =
-            (JsonArray)Common.GetValueByPath(fromObject, new string[] { "tunedModels" });
-        JsonArray result = new JsonArray();
-
-        foreach (var record in keyArray) {
-          result.Add(TuningJobFromMldev(Common.ParseToJsonNode(record), toObject, rootObject));
-        }
-        Common.SetValueByPath(toObject, new string[] { "tuningJobs" }, result);
       }
 
       return toObject;
@@ -1136,8 +1072,7 @@ namespace Google.GenAI {
         body = ListTuningJobsParametersToVertex(parameterNode, new JsonObject(), parameterNode);
         path = Common.FormatMap("tuningJobs", body["_url"]);
       } else {
-        body = ListTuningJobsParametersToMldev(parameterNode, new JsonObject(), parameterNode);
-        path = Common.FormatMap("tunedModels", body["_url"]);
+        throw new NotSupportedException("This method is only supported in the Vertex AI client.");
       }
       JsonObject? bodyObj = body?.AsObject();
       bodyObj?.Remove("_url");
@@ -1170,8 +1105,7 @@ namespace Google.GenAI {
       }
 
       if (!this._apiClient.VertexAI) {
-        responseNode =
-            ListTuningJobsResponseFromMldev(httpContentNode, new JsonObject(), parameterNode);
+        throw new NotSupportedException("This method is only supported in the Vertex AI client.");
       }
 
       return responseNode.Deserialize<ListTuningJobsResponse>() ??
