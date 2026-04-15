@@ -405,7 +405,6 @@ namespace Google.GenAI {
               Common.GetValueByPath(fromObject, new string[] { "learningRate" }));
         }
       }
-
       if (Common.GetValueByPath(fromObject, new string[] { "labels" }) != null) {
         Common.SetValueByPath(parentObject, new string[] { "labels" },
                               Common.GetValueByPath(fromObject, new string[] { "labels" }));
