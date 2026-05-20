@@ -47,8 +47,8 @@ namespace Google.GenAI.Types {
           }
 
     /// <summary>
-    /// The name of the BigQuery table created, in `predictions_&lt;timestamp&gt;` format, into
-    /// which the prediction output is written.
+    /// The name of the BigQuery table created, in `predictions_TIMESTAMP` format, into which the
+    /// prediction output is written.
     /// </summary>
     [JsonPropertyName("bigqueryOutputTable")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
