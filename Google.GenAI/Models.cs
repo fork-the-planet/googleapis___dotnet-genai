@@ -241,6 +241,31 @@ namespace Google.GenAI {
       return toObject;
     }
 
+    internal JsonNode ComputerUseToVertex(JsonNode fromObject, JsonObject parentObject,
+                                          JsonNode rootObject) {
+      JsonObject toObject = new JsonObject();
+
+      if (Common.GetValueByPath(fromObject, new string[] { "environment" }) != null) {
+        Common.SetValueByPath(toObject, new string[] { "environment" },
+                              Common.GetValueByPath(fromObject, new string[] { "environment" }));
+      }
+
+      if (Common.GetValueByPath(fromObject, new string[] { "excludedPredefinedFunctions" }) !=
+          null) {
+        Common.SetValueByPath(
+            toObject, new string[] { "excludedPredefinedFunctions" },
+            Common.GetValueByPath(fromObject, new string[] { "excludedPredefinedFunctions" }));
+      }
+
+      if (!Common.IsZero(Common.GetValueByPath(
+              fromObject, new string[] { "enablePromptInjectionDetection" }))) {
+        throw new NotSupportedException(
+            "enablePromptInjectionDetection parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise Agent Platform mode.");
+      }
+
+      return toObject;
+    }
+
     internal JsonNode ContentEmbeddingFromVertex(JsonNode fromObject, JsonObject parentObject,
                                                  JsonNode rootObject) {
       JsonObject toObject = new JsonObject();
@@ -4056,7 +4081,9 @@ namespace Google.GenAI {
 
       if (Common.GetValueByPath(fromObject, new string[] { "computerUse" }) != null) {
         Common.SetValueByPath(toObject, new string[] { "computerUse" },
-                              Common.GetValueByPath(fromObject, new string[] { "computerUse" }));
+                              ComputerUseToVertex(Common.ParseToJsonNode(Common.GetValueByPath(
+                                                      fromObject, new string[] { "computerUse" })),
+                                                  toObject, rootObject));
       }
 
       if (!Common.IsZero(Common.GetValueByPath(fromObject, new string[] { "fileSearch" }))) {
