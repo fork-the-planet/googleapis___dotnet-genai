@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 1.7.0, released 2026-05-21
+
+
+### New features
+
+* add `enable_prompt_injection_detection` for Computer Use feature for the Gemini API. ([cfda72c](https://github.com/googleapis/dotnet-genai/commit/cfda72ceb4384257ca03bdb1c1f3d8cef5156d1b))
+
+
 ## Version 1.6.2, released 2026-05-14
 
 
