@@ -23,69 +23,62 @@ using Google.GenAI.Serialization;
 
 namespace Google.GenAI.Types {
   /// <summary>
-  /// Reinforcement tuning autorater scorer.
+  /// Response for the validate_reward method.  Contains the computed reward for a reinforcement
+  /// tuning reward configuration.
   /// </summary>
 
-  public record ReinforcementTuningAutoraterScorer {
+  public record ValidateRewardResponse {
     /// <summary>
-    /// Autorater config for evaluation.
+    /// Used to retain the full HTTP response.
     /// </summary>
-    [JsonPropertyName("autoraterConfig")]
+    [JsonPropertyName("sdkHttpResponse")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public AutoraterConfig ? AutoraterConfig { get; set; }
+    public HttpResponse ? SdkHttpResponse { get; set; }
 
     /// <summary>
-    /// Allows substituting `prompt`, `response`, `system_instruction` and `references.reference`
-    /// (each wrapped in double curly braces) into the autorater prompt.
+    /// Output only. The overall weighted reward. For a `CompositeReinforcementTuningRewardConfig`,
+    /// this is the weighted average of all rewards. For a `SingleReinforcementTuningRewardConfig`,
+    /// this will be the value of the single reward.
     /// </summary>
-    [JsonPropertyName("autoraterPrompt")]
+    [JsonPropertyName("overallReward")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double
+        ? OverallReward {
+            get; set;
+          }
+
+    /// <summary>
+    /// Output only. In case of an error, this field will be populated with a detailed error message
+    /// to help with debugging.
+    /// </summary>
+    [JsonPropertyName("error")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string
-        ? AutoraterPrompt {
+        ? Error {
             get; set;
           }
 
     /// <summary>
-    /// Parses autorater returned response.
+    /// A map from reward name to reward info.
     /// </summary>
-    [JsonPropertyName("autoraterResponseParseConfig")]
+    [JsonPropertyName("rewardInfoDetails")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public ReinforcementTuningParseResponseConfig
-        ? AutoraterResponseParseConfig {
+    public Dictionary<string, ReinforcementTuningRewardInfo>
+        ? RewardInfoDetails {
             get; set;
           }
 
     /// <summary>
-    /// Scores autorater responses by directly converting parsed autorater response to float reward.
-    /// </summary>
-    [JsonPropertyName("parsedResponseConversionScorer")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public ReinforcementTuningAutoraterScorerParsedResponseConversionScorer
-        ? ParsedResponseConversionScorer {
-            get; set;
-          }
-
-    /// <summary>
-    /// Scores autorater responses by using exact string match reward scorer.
-    /// </summary>
-    [JsonPropertyName("exactMatchScorer")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public ReinforcementTuningAutoraterScorerExactMatchScorer
-        ? ExactMatchScorer {
-            get; set;
-          }
-
-    /// <summary>
-    /// Deserializes a JSON string to a ReinforcementTuningAutoraterScorer object.
+    /// Deserializes a JSON string to a ValidateRewardResponse object.
     /// </summary>
     /// <param name="jsonString">The JSON string to deserialize.</param>
     /// <param name="options">Optional JsonSerializerOptions.</param>
-    /// <returns>The deserialized ReinforcementTuningAutoraterScorer object, or null if
-    /// deserialization fails.</returns>
-    public static ReinforcementTuningAutoraterScorer
+    /// <returns>The deserialized ValidateRewardResponse object, or null if deserialization
+    /// fails.</returns>
+    public static ValidateRewardResponse
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ReinforcementTuningAutoraterScorer>(jsonString, options);
+        return JsonSerializer.Deserialize<ValidateRewardResponse>(jsonString, options);
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;
