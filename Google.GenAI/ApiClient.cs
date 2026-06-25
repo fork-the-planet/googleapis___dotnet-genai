@@ -124,7 +124,20 @@ namespace Google.GenAI
 
       var envProject = System.Environment.GetEnvironmentVariable("GOOGLE_CLOUD_PROJECT");
       var envLocation = System.Environment.GetEnvironmentVariable("GOOGLE_CLOUD_LOCATION");
-      var envApiKey = System.Environment.GetEnvironmentVariable("GOOGLE_API_KEY");
+
+      var googleApiKeyEnv = System.Environment.GetEnvironmentVariable("GOOGLE_API_KEY");
+      var geminiApiKeyEnv = System.Environment.GetEnvironmentVariable("GEMINI_API_KEY");
+      string? envApiKey = null;
+
+      if (googleApiKeyEnv != null && geminiApiKeyEnv != null)
+      {
+        System.Diagnostics.Trace.TraceWarning("Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.");
+        envApiKey = googleApiKeyEnv;
+      }
+      else
+      {
+        envApiKey = googleApiKeyEnv ?? geminiApiKeyEnv;
+      }
 
       this.Project = project ?? envProject;
       this.Location = location ?? envLocation;
@@ -207,7 +220,7 @@ namespace Google.GenAI
         if (string.IsNullOrEmpty(this.ApiKey))
         {
           throw new ArgumentException(
-              "API key must either be provided or set in the environment variable GOOGLE_API_KEY.");
+              "API key must either be provided or set in the environment variable GEMINI_API_KEY.");
         }
       }
 

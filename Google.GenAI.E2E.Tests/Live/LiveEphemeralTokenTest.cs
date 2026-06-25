@@ -40,7 +40,7 @@ public class LiveEphemeralTokenTest {
       BaseUrl = "http://localhost:1453", ApiVersion = "v1alpha"
     };
 
-    string apiKey = System.Environment.GetEnvironmentVariable("GOOGLE_API_KEY");
+    string apiKey = System.Environment.GetEnvironmentVariable("GEMINI_API_KEY");
 
     geminiClient =
         new Client(apiKey: apiKey, vertexAI: false, httpOptions: geminiClientHttpOptions);

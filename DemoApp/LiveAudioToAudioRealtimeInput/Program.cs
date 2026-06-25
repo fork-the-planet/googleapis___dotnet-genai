@@ -44,8 +44,8 @@ if (isVertex) {
   mimeType = "audio/l16;rate=24000";
 } else {
   Console.WriteLine("Running in Gemini API mode.");
-  string apiKey = System.Environment.GetEnvironmentVariable("GOOGLE_API_KEY") ??
-                  throw new ArgumentNullException("GOOGLE_API_KEY not set for Gemini API.");
+  string apiKey = System.Environment.GetEnvironmentVariable("GEMINI_API_KEY") ??
+                  throw new ArgumentNullException("GEMINI_API_KEY not set for Gemini API.");
   client = new Client(apiKey: apiKey);
   model = "gemini-2.5-flash-native-audio-preview-12-2025";
   mimeType = "audio/pcm";

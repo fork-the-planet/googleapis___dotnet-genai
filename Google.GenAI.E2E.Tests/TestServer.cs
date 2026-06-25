@@ -24,7 +24,7 @@ public class TestServer {
   public static bool IsReplayMode => (System.Environment.GetEnvironmentVariable("TEST_MODE") ?? "replay") == "replay";
   public static TestServerProcess StartTestServer() {
     var _project = System.Environment.GetEnvironmentVariable("GOOGLE_CLOUD_PROJECT");
-    string _apiKey = System.Environment.GetEnvironmentVariable("GOOGLE_API_KEY");
+    string _apiKey = System.Environment.GetEnvironmentVariable("GEMINI_API_KEY");
     var logPath = Path.GetFullPath("../../../test-server.log");
     try {
       File.WriteAllText(logPath, $"=== Test Server Started Mode: {(IsReplayMode ? "replay" : "record")} ===\n");
