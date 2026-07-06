@@ -23,44 +23,39 @@ using Google.GenAI.Serialization;
 
 namespace Google.GenAI.Types {
   /// <summary>
-  /// Composite reinforcement tuning reward config weighted reward config.
+  /// Configuration for text-specific output formatting.
   /// </summary>
 
-  public record CompositeReinforcementTuningRewardConfigWeightedRewardConfig {
+  public record TextResponseFormat {
     /// <summary>
-    /// Single reward configuration.
+    /// Optional. The IANA standard MIME type of the response.
     /// </summary>
-    [JsonPropertyName("rewardConfig")]
+    [JsonPropertyName("mimeType")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public SingleReinforcementTuningRewardConfig ? RewardConfig { get; set; }
+    public string ? MimeType { get; set; }
 
     /// <summary>
-    /// How much this single reward contributes to the total overall reward. Total reward is a
-    /// linear combination of single rewards with their corresponding weights, i.e., ```
-    /// total_reward = ( weight_a * reward_a + weight_b * reward_b + ... ) / (weight_a + weight_b +
-    /// ...) ```
+    /// Optional. The JSON schema that the output should conform to. Only applicable when mime_type
+    /// is APPLICATION_JSON.
     /// </summary>
-    [JsonPropertyName("weight")]
+    [JsonPropertyName("schema")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public double
-        ? Weight {
+    public object
+        ? Schema {
             get; set;
           }
 
     /// <summary>
-    /// Deserializes a JSON string to a CompositeReinforcementTuningRewardConfigWeightedRewardConfig
-    /// object.
+    /// Deserializes a JSON string to a TextResponseFormat object.
     /// </summary>
     /// <param name="jsonString">The JSON string to deserialize.</param>
     /// <param name="options">Optional JsonSerializerOptions.</param>
-    /// <returns>The deserialized CompositeReinforcementTuningRewardConfigWeightedRewardConfig
-    /// object, or null if deserialization fails.</returns>
-    public static CompositeReinforcementTuningRewardConfigWeightedRewardConfig
+    /// <returns>The deserialized TextResponseFormat object, or null if deserialization
+    /// fails.</returns>
+    public static TextResponseFormat
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer
-            .Deserialize<CompositeReinforcementTuningRewardConfigWeightedRewardConfig>(jsonString,
-                                                                                       options);
+        return JsonSerializer.Deserialize<TextResponseFormat>(jsonString, options);
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

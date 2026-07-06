@@ -23,44 +23,60 @@ using Google.GenAI.Serialization;
 
 namespace Google.GenAI.Types {
   /// <summary>
-  /// Composite reinforcement tuning reward config weighted reward config.
+  /// Configuration for video-specific output formatting. This data type is not supported in Gemini
+  /// API.
   /// </summary>
 
-  public record CompositeReinforcementTuningRewardConfigWeightedRewardConfig {
+  public record VideoResponseFormat {
     /// <summary>
-    /// Single reward configuration.
+    /// The aspect ratio for the video output.
     /// </summary>
-    [JsonPropertyName("rewardConfig")]
+    [JsonPropertyName("aspectRatio")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public SingleReinforcementTuningRewardConfig ? RewardConfig { get; set; }
+    public AspectRatio ? AspectRatio { get; set; }
 
     /// <summary>
-    /// How much this single reward contributes to the total overall reward. Total reward is a
-    /// linear combination of single rewards with their corresponding weights, i.e., ```
-    /// total_reward = ( weight_a * reward_a + weight_b * reward_b + ... ) / (weight_a + weight_b +
-    /// ...) ```
+    /// Optional. Delivery mode for the generated content.
     /// </summary>
-    [JsonPropertyName("weight")]
+    [JsonPropertyName("delivery")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public double
-        ? Weight {
+    public Delivery
+        ? Delivery {
             get; set;
           }
 
     /// <summary>
-    /// Deserializes a JSON string to a CompositeReinforcementTuningRewardConfigWeightedRewardConfig
-    /// object.
+    /// Optional. The duration for the video output.
+    /// </summary>
+    [JsonPropertyName("duration")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string
+        ? Duration {
+            get; set;
+          }
+
+    /// <summary>
+    /// Optional. The Google Cloud Storage URI to store the video output. Required for Vertex if
+    /// delivery is URI.
+    /// </summary>
+    [JsonPropertyName("gcsUri")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string
+        ? GcsUri {
+            get; set;
+          }
+
+    /// <summary>
+    /// Deserializes a JSON string to a VideoResponseFormat object.
     /// </summary>
     /// <param name="jsonString">The JSON string to deserialize.</param>
     /// <param name="options">Optional JsonSerializerOptions.</param>
-    /// <returns>The deserialized CompositeReinforcementTuningRewardConfigWeightedRewardConfig
-    /// object, or null if deserialization fails.</returns>
-    public static CompositeReinforcementTuningRewardConfigWeightedRewardConfig
+    /// <returns>The deserialized VideoResponseFormat object, or null if deserialization
+    /// fails.</returns>
+    public static VideoResponseFormat
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer
-            .Deserialize<CompositeReinforcementTuningRewardConfigWeightedRewardConfig>(jsonString,
-                                                                                       options);
+        return JsonSerializer.Deserialize<VideoResponseFormat>(jsonString, options);
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

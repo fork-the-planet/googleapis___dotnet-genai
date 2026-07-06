@@ -23,44 +23,39 @@ using Google.GenAI.Serialization;
 
 namespace Google.GenAI.Types {
   /// <summary>
-  /// Composite reinforcement tuning reward config weighted reward config.
+  /// ExaAiSearch tool type. A tool that uses the Exa.ai search engine for grounding. This data type
+  /// is not supported in Gemini API.
   /// </summary>
 
-  public record CompositeReinforcementTuningRewardConfigWeightedRewardConfig {
+  public record ToolExaAiSearch {
     /// <summary>
-    /// Single reward configuration.
+    /// The API key for ExaAiSearch.
     /// </summary>
-    [JsonPropertyName("rewardConfig")]
+    [JsonPropertyName("apiKey")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public SingleReinforcementTuningRewardConfig ? RewardConfig { get; set; }
+    public string ? ApiKey { get; set; }
 
     /// <summary>
-    /// How much this single reward contributes to the total overall reward. Total reward is a
-    /// linear combination of single rewards with their corresponding weights, i.e., ```
-    /// total_reward = ( weight_a * reward_a + weight_b * reward_b + ... ) / (weight_a + weight_b +
-    /// ...) ```
+    /// Optional. This field can be used to pass any parameter from the Exa.ai Search API.
     /// </summary>
-    [JsonPropertyName("weight")]
+    [JsonPropertyName("customConfigs")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public double
-        ? Weight {
+    public Dictionary<string, object>
+        ? CustomConfigs {
             get; set;
           }
 
     /// <summary>
-    /// Deserializes a JSON string to a CompositeReinforcementTuningRewardConfigWeightedRewardConfig
-    /// object.
+    /// Deserializes a JSON string to a ToolExaAiSearch object.
     /// </summary>
     /// <param name="jsonString">The JSON string to deserialize.</param>
     /// <param name="options">Optional JsonSerializerOptions.</param>
-    /// <returns>The deserialized CompositeReinforcementTuningRewardConfigWeightedRewardConfig
-    /// object, or null if deserialization fails.</returns>
-    public static CompositeReinforcementTuningRewardConfigWeightedRewardConfig
+    /// <returns>The deserialized ToolExaAiSearch object, or null if deserialization
+    /// fails.</returns>
+    public static ToolExaAiSearch
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer
-            .Deserialize<CompositeReinforcementTuningRewardConfigWeightedRewardConfig>(jsonString,
-                                                                                       options);
+        return JsonSerializer.Deserialize<ToolExaAiSearch>(jsonString, options);
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

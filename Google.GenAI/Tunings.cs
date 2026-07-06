@@ -980,6 +980,11 @@ namespace Google.GenAI {
                               Common.GetValueByPath(fromObject, new string[] { "topP" }));
       }
 
+      if (Common.GetValueByPath(fromObject, new string[] { "responseFormat" }) != null) {
+        Common.SetValueByPath(toObject, new string[] { "responseFormat" },
+                              Common.GetValueByPath(fromObject, new string[] { "responseFormat" }));
+      }
+
       return toObject;
     }
 

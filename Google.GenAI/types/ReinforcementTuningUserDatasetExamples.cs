@@ -23,49 +23,30 @@ using Google.GenAI.Serialization;
 
 namespace Google.GenAI.Types {
   /// <summary>
-  /// User-facing format for Gemini Reinforcement Tuning examples on Vertex.
+  /// Sample reinforcement tuning user data in the training dataset. The contents are truncated for
+  /// better UI showing. This data type is not supported in Gemini API.
   /// </summary>
 
-  public record ReinforcementTuningExample {
+  public record ReinforcementTuningUserDatasetExamples {
     /// <summary>
-    /// Multi-turn contents that represents the Prompt.
+    /// List of user datasset examples showing to user.
     /// </summary>
-    [JsonPropertyName("contents")]
+    [JsonPropertyName("userDatasetExamples")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public List<Content> ? Contents { get; set; }
+    public List<ReinforcementTuningExample> ? UserDatasetExamples { get; set; }
 
     /// <summary>
-    /// References for the given prompt. The key is the name of the reference, and the value is the
-    /// reference itself.
-    /// </summary>
-    [JsonPropertyName("references")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Dictionary<string, string>
-        ? References {
-            get; set;
-          }
-
-    /// <summary>
-    /// Corresponds to system_instruction in user-facing GenerateContentRequest.
-    /// </summary>
-    [JsonPropertyName("systemInstruction")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Content
-        ? SystemInstruction {
-            get; set;
-          }
-
-    /// <summary>
-    /// Deserializes a JSON string to a ReinforcementTuningExample object.
+    /// Deserializes a JSON string to a ReinforcementTuningUserDatasetExamples object.
     /// </summary>
     /// <param name="jsonString">The JSON string to deserialize.</param>
     /// <param name="options">Optional JsonSerializerOptions.</param>
-    /// <returns>The deserialized ReinforcementTuningExample object, or null if deserialization
-    /// fails.</returns>
-    public static ReinforcementTuningExample
+    /// <returns>The deserialized ReinforcementTuningUserDatasetExamples object, or null if
+    /// deserialization fails.</returns>
+    public static ReinforcementTuningUserDatasetExamples
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ReinforcementTuningExample>(jsonString, options);
+        return JsonSerializer.Deserialize<ReinforcementTuningUserDatasetExamples>(jsonString,
+                                                                                  options);
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

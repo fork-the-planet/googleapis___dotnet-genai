@@ -56,6 +56,16 @@ namespace Google.GenAI.Types {
           }
 
     /// <summary>
+    /// Output only. Statistics for reinforcement tuning.
+    /// </summary>
+    [JsonPropertyName("reinforcementTuningDataStats")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public DatasetStats
+        ? ReinforcementTuningDataStats {
+            get; set;
+          }
+
+    /// <summary>
     /// Deserializes a JSON string to a TuningDataStats object.
     /// </summary>
     /// <param name="jsonString">The JSON string to deserialize.</param>

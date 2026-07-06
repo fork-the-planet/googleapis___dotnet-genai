@@ -23,44 +23,58 @@ using Google.GenAI.Serialization;
 
 namespace Google.GenAI.Types {
   /// <summary>
-  /// Composite reinforcement tuning reward config weighted reward config.
+  /// Configuration for image-specific output formatting.
   /// </summary>
 
-  public record CompositeReinforcementTuningRewardConfigWeightedRewardConfig {
+  public record ImageResponseFormat {
     /// <summary>
-    /// Single reward configuration.
+    /// Optional. The aspect ratio for the image output.
     /// </summary>
-    [JsonPropertyName("rewardConfig")]
+    [JsonPropertyName("aspectRatio")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public SingleReinforcementTuningRewardConfig ? RewardConfig { get; set; }
+    public AspectRatio ? AspectRatio { get; set; }
 
     /// <summary>
-    /// How much this single reward contributes to the total overall reward. Total reward is a
-    /// linear combination of single rewards with their corresponding weights, i.e., ```
-    /// total_reward = ( weight_a * reward_a + weight_b * reward_b + ... ) / (weight_a + weight_b +
-    /// ...) ```
+    /// Optional. Delivery mode for the generated content.
     /// </summary>
-    [JsonPropertyName("weight")]
+    [JsonPropertyName("delivery")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public double
-        ? Weight {
+    public Delivery
+        ? Delivery {
             get; set;
           }
 
     /// <summary>
-    /// Deserializes a JSON string to a CompositeReinforcementTuningRewardConfigWeightedRewardConfig
-    /// object.
+    /// Optional. The size of the image output.
+    /// </summary>
+    [JsonPropertyName("imageSize")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public ImageSize
+        ? ImageSize {
+            get; set;
+          }
+
+    /// <summary>
+    /// Optional. The MIME type of the image output.
+    /// </summary>
+    [JsonPropertyName("mimeType")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string
+        ? MimeType {
+            get; set;
+          }
+
+    /// <summary>
+    /// Deserializes a JSON string to a ImageResponseFormat object.
     /// </summary>
     /// <param name="jsonString">The JSON string to deserialize.</param>
     /// <param name="options">Optional JsonSerializerOptions.</param>
-    /// <returns>The deserialized CompositeReinforcementTuningRewardConfigWeightedRewardConfig
-    /// object, or null if deserialization fails.</returns>
-    public static CompositeReinforcementTuningRewardConfigWeightedRewardConfig
+    /// <returns>The deserialized ImageResponseFormat object, or null if deserialization
+    /// fails.</returns>
+    public static ImageResponseFormat
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer
-            .Deserialize<CompositeReinforcementTuningRewardConfigWeightedRewardConfig>(jsonString,
-                                                                                       options);
+        return JsonSerializer.Deserialize<ImageResponseFormat>(jsonString, options);
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;
