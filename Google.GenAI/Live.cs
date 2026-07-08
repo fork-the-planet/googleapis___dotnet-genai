@@ -62,6 +62,7 @@ namespace Google.GenAI
         await clientWebSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, cancellationToken);
 
         var session = new AsyncSession(clientWebSocket, _apiClient);
+        await session.ReadSetupCompleteAsync(cancellationToken);
         success = true;
         return session;
       }
@@ -214,11 +215,24 @@ namespace Google.GenAI
     private readonly WebSocket _webSocket;
     private readonly ApiClient _apiClient;
     private int _isDisposed = 0; // 0 = false, 1 = true. Used with Interlocked.
+    private LiveServerMessage? _bufferedMessage;
 
     public AsyncSession(WebSocket webSocket, ApiClient apiClient)
     {
       _webSocket = webSocket;
       _apiClient = apiClient;
+    }
+
+    public LiveServerSetupComplete? SetupComplete { get; private set; }
+
+    internal async Task ReadSetupCompleteAsync(CancellationToken cancellationToken = default)
+    {
+      var message = await ReceiveAsync(cancellationToken);
+      if (message?.SetupComplete != null)
+      {
+        SetupComplete = message.SetupComplete;
+      }
+      _bufferedMessage = message;
     }
 
     /// <summary>
@@ -311,6 +325,13 @@ namespace Google.GenAI
     /// <exception cref="WebSocketException">Thrown for underlying WebSocket errors that are not a graceful close.</exception>
     public async Task<LiveServerMessage?> ReceiveAsync(CancellationToken cancellationToken = default)
     {
+      if (_bufferedMessage != null)
+      {
+        var msg = _bufferedMessage;
+        _bufferedMessage = null;
+        return msg;
+      }
+
       if (_isDisposed == 1)
       {
         return null;
