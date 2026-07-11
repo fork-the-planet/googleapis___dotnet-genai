@@ -308,6 +308,11 @@ namespace Google.GenAI {
                               Common.GetValueByPath(fromObject, new string[] { "token_count" }));
       }
 
+      if (Common.GetValueByPath(fromObject, new string[] { "tokensDetails" }) != null) {
+        Common.SetValueByPath(toObject, new string[] { "tokensDetails" },
+                              Common.GetValueByPath(fromObject, new string[] { "tokensDetails" }));
+      }
+
       return toObject;
     }
 
@@ -1058,6 +1063,10 @@ namespace Google.GenAI {
           if (usageMetadata != null && usageMetadata["promptTokenCount"] != null) {
             stats.Add("token_count",
                       JsonNode.Parse(usageMetadata["promptTokenCount"].ToJsonString()));
+          }
+          if (usageMetadata != null && usageMetadata["promptTokensDetails"] != null) {
+            stats.Add("tokensDetails",
+                      JsonNode.Parse(usageMetadata["promptTokensDetails"].ToJsonString()));
           }
           if (truncated != null) {
             stats.Add("truncated", JsonNode.Parse(truncated.ToJsonString()));
