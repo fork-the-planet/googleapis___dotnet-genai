@@ -795,6 +795,11 @@ namespace Google.GenAI {
         Common.SetValueByPath(toObject, new string[] { "safetySettings" }, result);
       }
 
+      if (Common.GetValueByPath(fromObject, new string[] { "historyConfig" }) != null) {
+        Common.SetValueByPath(toObject, new string[] { "historyConfig" },
+                              Common.GetValueByPath(fromObject, new string[] { "historyConfig" }));
+      }
+
       return toObject;
     }
 
@@ -882,6 +887,11 @@ namespace Google.GenAI {
       if (Common.GetValueByPath(fromObject, new string[] { "safetySettings" }) != null) {
         Common.SetValueByPath(toObject, new string[] { "safetySettings" },
                               Common.GetValueByPath(fromObject, new string[] { "safetySettings" }));
+      }
+
+      if (Common.GetValueByPath(fromObject, new string[] { "historyConfig" }) != null) {
+        Common.SetValueByPath(toObject, new string[] { "historyConfig" },
+                              Common.GetValueByPath(fromObject, new string[] { "historyConfig" }));
       }
 
       return toObject;
