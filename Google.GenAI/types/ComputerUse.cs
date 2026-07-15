@@ -77,7 +77,7 @@ namespace Google.GenAI.Types {
     /// <returns>The deserialized ComputerUse object, or null if deserialization fails.</returns>
     public static ComputerUse ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ComputerUse>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString, JsonConfig.TypeInfo<ComputerUse>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

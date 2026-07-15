@@ -63,7 +63,7 @@ namespace Google.GenAI.Types {
     public static Transcription
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<Transcription>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString, JsonConfig.TypeInfo<Transcription>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

@@ -86,7 +86,8 @@ namespace Google.GenAI.Types {
     public static ReinforcementTuningSpec
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ReinforcementTuningSpec>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString,
+                                          JsonConfig.TypeInfo<ReinforcementTuningSpec>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

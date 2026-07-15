@@ -66,7 +66,7 @@ namespace Google.GenAI.Types {
     public static ExecutableCode
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ExecutableCode>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString, JsonConfig.TypeInfo<ExecutableCode>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

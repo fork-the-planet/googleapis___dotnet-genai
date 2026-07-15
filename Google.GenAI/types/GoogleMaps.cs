@@ -56,7 +56,7 @@ namespace Google.GenAI.Types {
     /// <returns>The deserialized GoogleMaps object, or null if deserialization fails.</returns>
     public static GoogleMaps ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<GoogleMaps>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString, JsonConfig.TypeInfo<GoogleMaps>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

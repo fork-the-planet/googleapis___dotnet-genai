@@ -79,7 +79,8 @@ namespace Google.GenAI.Types {
     public static ReplicatedVoiceConfig
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ReplicatedVoiceConfig>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString,
+                                          JsonConfig.TypeInfo<ReplicatedVoiceConfig>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

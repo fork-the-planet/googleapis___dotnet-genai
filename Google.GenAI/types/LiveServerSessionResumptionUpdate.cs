@@ -77,7 +77,8 @@ namespace Google.GenAI.Types {
     public static LiveServerSessionResumptionUpdate
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<LiveServerSessionResumptionUpdate>(jsonString, options);
+        return JsonSerializer.Deserialize(
+            jsonString, JsonConfig.TypeInfo<LiveServerSessionResumptionUpdate>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

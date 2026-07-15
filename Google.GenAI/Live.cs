@@ -185,7 +185,7 @@ namespace Google.GenAI
         Config = config,
       };
       LiveConverters liveConverters = new LiveConverters(_apiClient);
-      string jsonString = JsonSerializer.Serialize(parameters, JsonConfig.InternalSerializerOptions);
+      string jsonString = JsonSerializer.Serialize(parameters, JsonConfig.TypeInfo<LiveConnectParameters>());
       JsonNode? parameterNode = JsonNode.Parse(jsonString);
       if (parameterNode == null)
       {
@@ -201,7 +201,7 @@ namespace Google.GenAI
         body = liveConverters.LiveConnectParametersToMldev(_apiClient, parameterNode, new JsonObject());
       }
       body?.AsObject().Remove("config");
-      return JsonSerializer.Serialize(body, JsonConfig.JsonSerializerOptions);
+      return body?.ToJsonString(JsonConfig.JsonSerializerOptions) ?? "null";
     }
 
   }
@@ -395,7 +395,7 @@ namespace Google.GenAI
       {
         transformedNode = liveConverters.LiveServerMessageFromMldev(serverMessageNode, new JsonObject());
       }
-      var serverMessage = JsonSerializer.Deserialize<LiveServerMessage>(transformedNode, JsonConfig.JsonSerializerOptions);
+      var serverMessage = JsonSerializer.Deserialize(transformedNode, JsonConfig.TypeInfo<LiveServerMessage>(JsonConfig.JsonSerializerOptions));
       if (serverMessage == null)
       {
         throw new InvalidOperationException("Failed to deserialize server message because it is null.");
@@ -452,7 +452,7 @@ namespace Google.GenAI
 
     private async Task send(LiveClientMessage liveClientMessage, CancellationToken cancellationToken = default)
     {
-      JsonNode? liveClientMessageNode = JsonNode.Parse(JsonSerializer.Serialize(liveClientMessage, JsonConfig.JsonSerializerOptions));
+      JsonNode? liveClientMessageNode = JsonSerializer.SerializeToNode(liveClientMessage, JsonConfig.TypeInfo<LiveClientMessage>(JsonConfig.JsonSerializerOptions));
       if (liveClientMessageNode == null)
       {
         throw new InvalidOperationException("Failed to parse liveClientMessage into a JsonNode.");
@@ -467,7 +467,7 @@ namespace Google.GenAI
       {
         body = liveConverters.LiveClientMessageToMldev(liveClientMessageNode, new JsonObject());
       }
-      string jsonMessage = JsonSerializer.Serialize(body, JsonConfig.JsonSerializerOptions);
+      string jsonMessage = body?.ToJsonString(JsonConfig.JsonSerializerOptions) ?? string.Empty;
       byte[] buffer = Encoding.UTF8.GetBytes(jsonMessage);
 
       if (_webSocket.State != WebSocketState.Open)

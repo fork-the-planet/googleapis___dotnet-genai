@@ -1697,7 +1697,8 @@ namespace Google.GenAI {
       if (!Common.IsZero(config)) {
         parameter.Config = config;
       }
-      string jsonString = JsonSerializer.Serialize(parameter);
+      string jsonString =
+          JsonSerializer.Serialize(parameter, JsonConfig.TypeInfo<GetTuningJobParameters>());
       JsonNode? parameterNode = JsonNode.Parse(jsonString);
       if (parameterNode == null) {
         throw new NotSupportedException("Failed to parse GetTuningJobParameters to JsonNode.");
@@ -1722,9 +1723,9 @@ namespace Google.GenAI {
       }
       HttpOptions? requestHttpOptions = config?.HttpOptions;
 
-      ApiResponse response =
-          await this._apiClient.RequestAsync(HttpMethod.Get, path, JsonSerializer.Serialize(body),
-                                             requestHttpOptions, cancellationToken);
+      ApiResponse response = await this._apiClient.RequestAsync(
+          HttpMethod.Get, path, body?.ToJsonString(JsonConfig.InternalSerializerOptions),
+          requestHttpOptions, cancellationToken);
       HttpContent httpContent = response.GetEntity();
 #if NETSTANDARD2_0
       string contentString = await httpContent.ReadAsStringAsync();
@@ -1745,7 +1746,7 @@ namespace Google.GenAI {
         responseNode = TuningJobFromMldev(httpContentNode, new JsonObject(), parameterNode);
       }
 
-      return responseNode.Deserialize<TuningJob>() ??
+      return responseNode.Deserialize(JsonConfig.TypeInfo<TuningJob>()) ??
              throw new InvalidOperationException("Failed to deserialize Task<TuningJob>.");
     }
 
@@ -1756,7 +1757,8 @@ namespace Google.GenAI {
       if (!Common.IsZero(config)) {
         parameter.Config = config;
       }
-      string jsonString = JsonSerializer.Serialize(parameter);
+      string jsonString =
+          JsonSerializer.Serialize(parameter, JsonConfig.TypeInfo<ListTuningJobsParameters>());
       JsonNode? parameterNode = JsonNode.Parse(jsonString);
       if (parameterNode == null) {
         throw new NotSupportedException("Failed to parse ListTuningJobsParameters to JsonNode.");
@@ -1781,9 +1783,9 @@ namespace Google.GenAI {
       }
       HttpOptions? requestHttpOptions = config?.HttpOptions;
 
-      ApiResponse response =
-          await this._apiClient.RequestAsync(HttpMethod.Get, path, JsonSerializer.Serialize(body),
-                                             requestHttpOptions, cancellationToken);
+      ApiResponse response = await this._apiClient.RequestAsync(
+          HttpMethod.Get, path, body?.ToJsonString(JsonConfig.InternalSerializerOptions),
+          requestHttpOptions, cancellationToken);
       HttpContent httpContent = response.GetEntity();
 #if NETSTANDARD2_0
       string contentString = await httpContent.ReadAsStringAsync();
@@ -1806,7 +1808,7 @@ namespace Google.GenAI {
             "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini Developer API mode.");
       }
 
-      return responseNode.Deserialize<ListTuningJobsResponse>() ??
+      return responseNode.Deserialize(JsonConfig.TypeInfo<ListTuningJobsResponse>()) ??
              throw new InvalidOperationException(
                  "Failed to deserialize Task<ListTuningJobsResponse>.");
     }
@@ -1830,7 +1832,8 @@ namespace Google.GenAI {
       if (!Common.IsZero(config)) {
         parameter.Config = config;
       }
-      string jsonString = JsonSerializer.Serialize(parameter);
+      string jsonString =
+          JsonSerializer.Serialize(parameter, JsonConfig.TypeInfo<CancelTuningJobParameters>());
       JsonNode? parameterNode = JsonNode.Parse(jsonString);
       if (parameterNode == null) {
         throw new NotSupportedException("Failed to parse CancelTuningJobParameters to JsonNode.");
@@ -1855,9 +1858,9 @@ namespace Google.GenAI {
       }
       HttpOptions? requestHttpOptions = config?.HttpOptions;
 
-      ApiResponse response =
-          await this._apiClient.RequestAsync(HttpMethod.Post, path, JsonSerializer.Serialize(body),
-                                             requestHttpOptions, cancellationToken);
+      ApiResponse response = await this._apiClient.RequestAsync(
+          HttpMethod.Post, path, body?.ToJsonString(JsonConfig.InternalSerializerOptions),
+          requestHttpOptions, cancellationToken);
       HttpContent httpContent = response.GetEntity();
 #if NETSTANDARD2_0
       string contentString = await httpContent.ReadAsStringAsync();
@@ -1880,7 +1883,7 @@ namespace Google.GenAI {
             CancelTuningJobResponseFromMldev(httpContentNode, new JsonObject(), parameterNode);
       }
 
-      return responseNode.Deserialize<CancelTuningJobResponse>() ??
+      return responseNode.Deserialize(JsonConfig.TypeInfo<CancelTuningJobResponse>()) ??
              throw new InvalidOperationException(
                  "Failed to deserialize Task<CancelTuningJobResponse>.");
     }
@@ -1903,7 +1906,8 @@ namespace Google.GenAI {
       if (!Common.IsZero(config)) {
         parameter.Config = config;
       }
-      string jsonString = JsonSerializer.Serialize(parameter);
+      string jsonString = JsonSerializer.Serialize(
+          parameter, JsonConfig.TypeInfo<CreateTuningJobParametersPrivate>());
       JsonNode? parameterNode = JsonNode.Parse(jsonString);
       if (parameterNode == null) {
         throw new NotSupportedException(
@@ -1930,9 +1934,9 @@ namespace Google.GenAI {
       }
       HttpOptions? requestHttpOptions = config?.HttpOptions;
 
-      ApiResponse response =
-          await this._apiClient.RequestAsync(HttpMethod.Post, path, JsonSerializer.Serialize(body),
-                                             requestHttpOptions, cancellationToken);
+      ApiResponse response = await this._apiClient.RequestAsync(
+          HttpMethod.Post, path, body?.ToJsonString(JsonConfig.InternalSerializerOptions),
+          requestHttpOptions, cancellationToken);
       HttpContent httpContent = response.GetEntity();
 #if NETSTANDARD2_0
       string contentString = await httpContent.ReadAsStringAsync();
@@ -1954,7 +1958,7 @@ namespace Google.GenAI {
             "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini Developer API mode.");
       }
 
-      return responseNode.Deserialize<TuningJob>() ??
+      return responseNode.Deserialize(JsonConfig.TypeInfo<TuningJob>()) ??
              throw new InvalidOperationException("Failed to deserialize Task<TuningJob>.");
     }
 
@@ -1975,7 +1979,8 @@ namespace Google.GenAI {
       if (!Common.IsZero(config)) {
         parameter.Config = config;
       }
-      string jsonString = JsonSerializer.Serialize(parameter);
+      string jsonString = JsonSerializer.Serialize(
+          parameter, JsonConfig.TypeInfo<CreateTuningJobParametersPrivate>());
       JsonNode? parameterNode = JsonNode.Parse(jsonString);
       if (parameterNode == null) {
         throw new NotSupportedException(
@@ -2002,9 +2007,9 @@ namespace Google.GenAI {
       }
       HttpOptions? requestHttpOptions = config?.HttpOptions;
 
-      ApiResponse response =
-          await this._apiClient.RequestAsync(HttpMethod.Post, path, JsonSerializer.Serialize(body),
-                                             requestHttpOptions, cancellationToken);
+      ApiResponse response = await this._apiClient.RequestAsync(
+          HttpMethod.Post, path, body?.ToJsonString(JsonConfig.InternalSerializerOptions),
+          requestHttpOptions, cancellationToken);
       HttpContent httpContent = response.GetEntity();
 #if NETSTANDARD2_0
       string contentString = await httpContent.ReadAsStringAsync();
@@ -2026,7 +2031,7 @@ namespace Google.GenAI {
         responseNode = httpContentNode;
       }
 
-      return responseNode.Deserialize<TuningOperation>() ??
+      return responseNode.Deserialize(JsonConfig.TypeInfo<TuningOperation>()) ??
              throw new InvalidOperationException("Failed to deserialize Task<TuningOperation>.");
     }
 
@@ -2055,7 +2060,8 @@ namespace Google.GenAI {
       if (!Common.IsZero(config)) {
         parameter.Config = config;
       }
-      string jsonString = JsonSerializer.Serialize(parameter);
+      string jsonString =
+          JsonSerializer.Serialize(parameter, JsonConfig.TypeInfo<ValidateRewardParameters>());
       JsonNode? parameterNode = JsonNode.Parse(jsonString);
       if (parameterNode == null) {
         throw new NotSupportedException("Failed to parse ValidateRewardParameters to JsonNode.");
@@ -2081,9 +2087,9 @@ namespace Google.GenAI {
       }
       HttpOptions? requestHttpOptions = config?.HttpOptions;
 
-      ApiResponse response =
-          await this._apiClient.RequestAsync(HttpMethod.Post, path, JsonSerializer.Serialize(body),
-                                             requestHttpOptions, cancellationToken);
+      ApiResponse response = await this._apiClient.RequestAsync(
+          HttpMethod.Post, path, body?.ToJsonString(JsonConfig.InternalSerializerOptions),
+          requestHttpOptions, cancellationToken);
       HttpContent httpContent = response.GetEntity();
 #if NETSTANDARD2_0
       string contentString = await httpContent.ReadAsStringAsync();
@@ -2106,7 +2112,7 @@ namespace Google.GenAI {
             "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini Developer API mode.");
       }
 
-      return responseNode.Deserialize<ValidateRewardResponse>() ??
+      return responseNode.Deserialize(JsonConfig.TypeInfo<ValidateRewardResponse>()) ??
              throw new InvalidOperationException(
                  "Failed to deserialize Task<ValidateRewardResponse>.");
     }

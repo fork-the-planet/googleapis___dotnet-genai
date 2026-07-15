@@ -43,7 +43,7 @@ namespace Google.GenAI.Types {
     public static LanguageHints
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<LanguageHints>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString, JsonConfig.TypeInfo<LanguageHints>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

@@ -4838,9 +4838,7 @@ public class GoogleGenAIExtensionsTest
                     "result": [
                       {
                         "$type": "text",
-                        "Text": "Additional text data",
-                        "Annotations": null,
-                        "AdditionalProperties": null
+                        "text": "Additional text data"
                       }
                     ]
                   }

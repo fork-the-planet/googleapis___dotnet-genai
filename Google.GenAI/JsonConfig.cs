@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
@@ -51,9 +52,21 @@ namespace Google.GenAI
               new StringToNullableLongConverter(),
             }
       };
-      options.TypeInfoResolverChain.Insert(0, GenAIJsonContext.Default);
-      options.TypeInfoResolverChain.Add(new DefaultJsonTypeInfoResolver());
+      options.TypeInfoResolverChain.Add(GenAIJsonContext.Default);
+      options.TypeInfoResolverChain.Add(Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions.TypeInfoResolver);
       return options;
     }
+
+    /// <summary>
+    /// Gets the source-generated TypeInfo for a given type T to ensure AOT compliance.
+    /// </summary>
+    internal static JsonTypeInfo<T> TypeInfo<T>(JsonSerializerOptions? options = null)
+        => (JsonTypeInfo<T>)(options ?? InternalSerializerOptions).GetTypeInfo(typeof(T));
+
+    /// <summary>
+    /// Gets the source-generated TypeInfo for a given Type to ensure AOT compliance.
+    /// </summary>
+    internal static JsonTypeInfo TypeInfo(Type type, JsonSerializerOptions? options = null)
+        => (options ?? InternalSerializerOptions).GetTypeInfo(type);
   }
 }

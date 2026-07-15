@@ -55,7 +55,8 @@ namespace Google.GenAI.Types {
     public static ToolExaAiSearch
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ToolExaAiSearch>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString,
+                                          JsonConfig.TypeInfo<ToolExaAiSearch>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

@@ -176,7 +176,7 @@ namespace Google.GenAI.Types {
     /// <returns>The deserialized Tool object, or null if deserialization fails.</returns>
     public static Tool ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<Tool>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString, JsonConfig.TypeInfo<Tool>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

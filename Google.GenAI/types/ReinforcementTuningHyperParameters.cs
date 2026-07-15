@@ -144,7 +144,8 @@ namespace Google.GenAI.Types {
     public static ReinforcementTuningHyperParameters
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ReinforcementTuningHyperParameters>(jsonString, options);
+        return JsonSerializer.Deserialize(
+            jsonString, JsonConfig.TypeInfo<ReinforcementTuningHyperParameters>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

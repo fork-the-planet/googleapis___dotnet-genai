@@ -60,8 +60,8 @@ namespace Google.GenAI.Types {
     public static ReinforcementTuningCodeExecutionRewardScorer
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ReinforcementTuningCodeExecutionRewardScorer>(jsonString,
-                                                                                        options);
+        return JsonSerializer.Deserialize(
+            jsonString, JsonConfig.TypeInfo<ReinforcementTuningCodeExecutionRewardScorer>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

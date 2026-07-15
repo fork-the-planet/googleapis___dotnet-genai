@@ -126,7 +126,8 @@ namespace Google.GenAI.Types {
     public static FunctionDeclaration
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<FunctionDeclaration>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString,
+                                          JsonConfig.TypeInfo<FunctionDeclaration>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

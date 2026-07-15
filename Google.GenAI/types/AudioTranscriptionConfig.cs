@@ -75,7 +75,8 @@ namespace Google.GenAI.Types {
     public static AudioTranscriptionConfig
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<AudioTranscriptionConfig>(jsonString, options);
+        return JsonSerializer.Deserialize(jsonString,
+                                          JsonConfig.TypeInfo<AudioTranscriptionConfig>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

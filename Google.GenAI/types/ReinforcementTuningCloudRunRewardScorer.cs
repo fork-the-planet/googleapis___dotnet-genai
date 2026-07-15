@@ -71,8 +71,8 @@ namespace Google.GenAI.Types {
     public static ReinforcementTuningCloudRunRewardScorer
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer.Deserialize<ReinforcementTuningCloudRunRewardScorer>(jsonString,
-                                                                                   options);
+        return JsonSerializer.Deserialize(
+            jsonString, JsonConfig.TypeInfo<ReinforcementTuningCloudRunRewardScorer>(options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;

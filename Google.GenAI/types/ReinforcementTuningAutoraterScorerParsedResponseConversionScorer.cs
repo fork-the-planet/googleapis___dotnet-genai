@@ -40,9 +40,10 @@ namespace Google.GenAI.Types {
     public static ReinforcementTuningAutoraterScorerParsedResponseConversionScorer
         ? FromJson(string jsonString, JsonSerializerOptions? options = null) {
       try {
-        return JsonSerializer
-            .Deserialize<ReinforcementTuningAutoraterScorerParsedResponseConversionScorer>(
-                jsonString, options);
+        return JsonSerializer.Deserialize(
+            jsonString,
+            JsonConfig.TypeInfo<ReinforcementTuningAutoraterScorerParsedResponseConversionScorer>(
+                options));
       } catch (JsonException e) {
         Console.Error.WriteLine($"Error deserializing JSON: {e.ToString()}");
         return null;
