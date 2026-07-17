@@ -55,8 +55,19 @@ namespace Google.GenAI.Types {
           }
 
     /// <summary>
-    /// A list of phrases used for speech adaptation, which biases the ASR model to improve
-    /// recognition of these specific terms.
+    /// A list of custom vocabulary phrases, which biases the ASR model to improve recognition of
+    /// these specific terms.
+    /// </summary>
+    [JsonPropertyName("customVocabulary")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public List<string>
+        ? CustomVocabulary {
+            get; set;
+          }
+
+    /// <summary>
+    /// Deprecated. A list of phrases used for speech adaptation, which biases the ASR model to
+    /// improve recognition of these specific terms.
     /// </summary>
     [JsonPropertyName("adaptationPhrases")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

@@ -50,6 +50,12 @@ namespace Google.GenAI {
                               Common.GetValueByPath(fromObject, new string[] { "languageHints" }));
       }
 
+      if (Common.GetValueByPath(fromObject, new string[] { "customVocabulary" }) != null) {
+        Common.SetValueByPath(
+            toObject, new string[] { "customVocabulary" },
+            Common.GetValueByPath(fromObject, new string[] { "customVocabulary" }));
+      }
+
       if (Common.GetValueByPath(fromObject, new string[] { "adaptationPhrases" }) != null) {
         Common.SetValueByPath(
             toObject, new string[] { "adaptationPhrases" },
